@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body suppressHydrationWarning={true}>
         <Navbar />
         <main style={{ padding: '80px 0 0 0', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
           {children}
