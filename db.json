@@ -1,0 +1,53 @@
+{
+  "beers": [
+    {
+      "id": "ce71cc85-208c-4d0a-b14e-58c3055fdca1",
+      "name": "Heineken",
+      "type": "Lager",
+      "abv": 5,
+      "origin": "Netherlands",
+      "description": "A pale lager beer with 5% alcohol by volume.",
+      "image": "https://placehold.co/600x400?text=Heineken"
+    },
+    {
+      "id": "09dadfc4-5958-4fd4-8c34-2f167e3cab01",
+      "name": "Guinness Draught",
+      "type": "Stout",
+      "abv": 4.2,
+      "origin": "Ireland",
+      "description": "A dark Irish dry stout.",
+      "image": "https://placehold.co/600x400?text=Guinness"
+    },
+    {
+      "id": "1cf4bd25-a7be-4137-9385-cf5767da516e",
+      "name": "Asahi Super Dry",
+      "type": "Lager",
+      "abv": 5.2,
+      "origin": "Japan",
+      "description": "A Japanese rice lager.",
+      "image": "https://placehold.co/600x400?text=Asahi"
+    }
+  ],
+  "wines": [
+    {
+      "id": "a4c60e1e-7aab-4b0e-98ec-2ea70f9106e5",
+      "name": "Cloudy Bay Sauvignon Blanc",
+      "type": "White",
+      "variety": "Sauvignon Blanc",
+      "vintage": 2022,
+      "origin": "New Zealand",
+      "description": "Vibrant and expressive.",
+      "image": "https://placehold.co/600x400?text=Cloudy+Bay"
+    },
+    {
+      "id": "11398f4c-31c5-4ea1-87e4-e48e0b0bdbe6",
+      "name": "Penfolds Bin 389",
+      "type": "Red",
+      "variety": "Cabernet Shiraz",
+      "vintage": 2019,
+      "origin": "Australia",
+      "description": "Often referred to as Baby Grange.",
+      "image": "https://placehold.co/600x400?text=Penfolds"
+    }
+  ]
+}
