@@ -1,21 +1,56 @@
-import { JSONFilePreset } from 'lowdb/node';
-import { Beer, Wine } from './types';
+import mongoose from 'mongoose';
 
-// Define the structure of our database
-export interface Data {
-    beers: Beer[];
-    wines: Wine[];
+const MONGODB_URI = process.env.MONGODB_URI;
+
+if (!MONGODB_URI) {
+    // In production, we want to fail if the URI is not set.
+    // In development, we might want to warn or just fail.
+    // We'll throw an error to ensure the user sets it.
+    // throw new Error(
+    //   'Please define the MONGODB_URI environment variable inside .env.local'
+    // );
+    console.warn('Please define the MONGODB_URI environment variable inside .env.local');
 }
 
-// Initialize the database with default data
-const defaultData: Data = { beers: [], wines: [] };
+/**
+ * Global is used here to maintain a cached connection across hot reloads
+ * in development. This prevents connections growing exponentially
+ * during API Route usage.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let cached = (global as any).mongoose;
 
-// Singleton instance of the database
-// We use a function to get the DB instance to handle potential async initialization if needed in future
-// For JSONFilePreset, it's synchronous-like but returns a Promise-like object usually, 
-// strictly speaking it returns a Promise<Low<Data>>.
-
-export const getDb = async () => {
-    const db = await JSONFilePreset<Data>('db.json', defaultData);
-    return db;
+if (!cached) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    cached = (global as any).mongoose = { conn: null, promise: null };
 }
+
+async function dbConnect() {
+    if (!MONGODB_URI) {
+        return null;
+    }
+    if (cached.conn) {
+        return cached.conn;
+    }
+
+    if (!cached.promise) {
+        const opts = {
+            bufferCommands: false,
+        };
+
+        cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+            return mongoose;
+        });
+    }
+
+    try {
+        cached.conn = await cached.promise;
+    } catch (e) {
+        cached.promise = null;
+        throw e;
+    }
+
+    return cached.conn;
+}
+
+export default dbConnect;
